@@ -6,7 +6,7 @@ if (!location.hash) {
 const roomHash = location.hash.substring(1);
 
 // ScaleDrone创建的channel，你也可以自己创建
-const drone = new ScaleDrone('UfOlfBFyff9S62Cm');
+const drone = new ScaleDrone('JztSpBPk9PVwgSMV');
 // 房间名必须以'observable-'开头
 const roomName = 'observable-' + roomHash;
 const configuration = {
