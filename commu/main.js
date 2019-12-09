@@ -62,6 +62,7 @@ var downloadBtn = document.getElementById('downloadBtn');
 var buffer;
 var mediaStream;
 var mediaRecoder;
+var promise = null;
 //var chunks = [];
 //var mediaStream = null;
 function startWebRTC(isOfferer) {
@@ -136,6 +137,21 @@ function localDescCreated(desc) {
         onError
     );
 }
+function getUserMedia(constrains,success,error){
+            if(navigator.mediaDevices.getUserMedia){
+                //最新标准API
+                promise = navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
+            } else if (navigator.webkitGetUserMedia){
+                //webkit内核浏览器
+                promise = navigator.webkitGetUserMedia(constrains).then(success).catch(error);
+            } else if (navigator.mozGetUserMedia){
+                //Firefox浏览器
+                promise = navagator.mozGetUserMedia(constrains).then(success).catch(error);
+            } else if (navigator.getUserMedia){
+                //旧版API
+                promise = navigator.getUserMedia(constrains).then(success).catch(error);
+            }
+        }
 
 function capture(){
     var canvas = document.getElementById("canvas");
