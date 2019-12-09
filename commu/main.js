@@ -137,21 +137,6 @@ function localDescCreated(desc) {
         onError
     );
 }
-function getUserMedia(constrains,success,error){
-            if(navigator.mediaDevices.getUserMedia){
-                //最新标准API
-                promise = navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
-            } else if (navigator.webkitGetUserMedia){
-                //webkit内核浏览器
-                promise = navigator.webkitGetUserMedia(constrains).then(success).catch(error);
-            } else if (navigator.mozGetUserMedia){
-                //Firefox浏览器
-                promise = navagator.mozGetUserMedia(constrains).then(success).catch(error);
-            } else if (navigator.getUserMedia){
-                //旧版API
-                promise = navigator.getUserMedia(constrains).then(success).catch(error);
-            }
-        }
 
 function capture(){
     var canvas = document.getElementById("canvas");
@@ -169,7 +154,7 @@ function changeFilter(){
 
 //录制按钮点击事件
 recordBtn.onclick = function(){
-    if(promise){
+    if(true){
         if (recordBtn.textContent==='开始录制') {
             startRecord();
             recordBtn.textContent='停止录制';
