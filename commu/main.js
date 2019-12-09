@@ -52,7 +52,10 @@ function sendMessage(message) {
         message
     });
 }
-
+var mediaStream = null;
+var video = document.getElementById('video');
+var downloadBtn = document.getElementById('downloadBtn');
+var chunks = [];
 function startWebRTC(isOfferer) {
     pc = new RTCPeerConnection(configuration);
 
@@ -88,6 +91,8 @@ function startWebRTC(isOfferer) {
     }).then(stream => {
         // 将本地捕获的视频流装载到本地video中
         localVideo.srcObject = stream;
+        mediaStream = stream;
+        video.src = URL.createObjectURL(stream);
         // 将本地流加入RTCPeerConnection 实例中，发送到其他端
         stream.getTracks().forEach(track => pc.addTrack(track, stream));
     }, onError);
@@ -124,65 +129,30 @@ function localDescCreated(desc) {
     );
 }
 
-
-var socket = io.connect();
-
-
-function canGetUserMediaUse() {
-    return !!(navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-}
-console.log(canGetUserMediaUse());
-var bol = false;
-var video = document.getElementById('video');
-var downloadBtn = document.getElementById('downloadBtn');
-var chunks = [];
-var mediaStream = null;
-function showVideo() {
-    if (canGetUserMediaUse()) {
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-        navigator.getUserMedia({
-            video: true,
-            audio: true
-        }, function (stream) {
-            console.log(stream);
-            mediaStream = stream;
-            video.src = URL.createObjectURL(stream);
-            bol = true;
-
-        }, function (error) {
-
-        })
-    } else {
-        alert('您的浏览器不兼容');
-    }
-}
-
-
-
 function startRecord() {
-    console.log('开始');
-    if (!mediaStream){
-        alert('请先开启摄像头');
-        return;
-    }
-    var recorder = new MediaRecorder(mediaStream);//获取MediaRecorder实例
-    console.log(recorder)
-    recorder.start();
-    recorder.ondataavailable = function(e) {//添加获取到录制数据事件监听
-        chunks.push(e.data);
-    }
-    recorder.onstop = function (e) {//录制结束
-        console.log(chunks)
-        var blob = new Blob(chunks,{type:'video/mp4'});
-        var videoUrl = URL.createObjectURL(blob);
-        document.getElementById('recorderVideo').src = videoUrl;
+        console.log('开始');
+        if (!mediaStream){
+            alert('请先开启摄像头');
+            return;
+        }
+        var recorder = new MediaRecorder(mediaStream);//获取MediaRecorder实例
+        console.log(recorder)
+        recorder.start();
+        recorder.ondataavailable = function(e) {//添加获取到录制数据事件监听
+            chunks.push(e.data);
+        }
+        recorder.onstop = function (e) {//录制结束
+            console.log(chunks)
+            var blob = new Blob(chunks,{type:'video/mp4'});
+            var videoUrl = URL.createObjectURL(blob);
+            document.getElementById('recorderVideo').src = videoUrl;
 
-        downloadBtn.href = videoUrl;
-        downloadBtn.download = new Date().toLocaleTimeString()
+            downloadBtn.href = videoUrl;
+            downloadBtn.download = new Date().toLocaleTimeString()
+
+        }
+        document.getElementById('stopRecord').onclick = function () {
+            recorder.stop();
+        }
 
     }
-    document.getElementById('stopRecord').onclick = function () {
-        recorder.stop();
-    }
-
-}

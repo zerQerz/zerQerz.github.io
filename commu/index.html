@@ -37,17 +37,14 @@
     </style>
 </head>
 <body>
-    <!--<div class="copy">Copy this URL,and Open it in another page</div>-->
+    <div class="copy">Copy this URL,and Open it in another page</div>
     <video id="localVideo" autoplay muted></video>
     <video id="remoteVideo" autoplay></video>
+    <video muted autoplay controls id="video"></video>
+    <video muted autoplay controls id="recorderVideo"></video>
+    <button onclick="startRecord()">å¼€å§‹å½•åˆ¶</button>
+    <button id="stopRecord">ç»“æŸ</button>
+    <a  id="downloadBtn">ä¸‹è½½è§†é¢‘</a>
     <script src="main.js"></script>
-    <div>
-        <video muted autoplay controls id="video"></video>
-        <video muted autoplay controls id="recorderVideo"></video>
-    </div>
-    <button onclick="showVideo()">´ò¿ªÉãÏñÍ·</button>
-    <button onclick="startRecord()">¿ªÊ¼Â¼ÖÆ</button>
-    <button id="stopRecord">½áÊø</button>
-    <a  id="downloadBtn">ÏÂÔØÊÓÆµ</a>
 </body>
 </html>
