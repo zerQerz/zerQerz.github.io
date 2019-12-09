@@ -41,5 +41,13 @@
     <video id="localVideo" autoplay muted></video>
     <video id="remoteVideo" autoplay></video>
     <script src="main.js"></script>
+    <div>
+        <video muted autoplay controls id="video"></video>
+        <video muted autoplay controls id="recorderVideo"></video>
+    </div>
+    <button onclick="showVideo()">打开摄像头</button>
+    <button onclick="startRecord()">开始录制</button>
+    <button id="stopRecord">结束</button>
+    <a  id="downloadBtn">下载视频</a>
 </body>
 </html>
