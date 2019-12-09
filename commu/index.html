@@ -57,12 +57,18 @@
 </head>
 <body>
     <div class="copy">Copy this URL,and Open it in another page</div>
-    <video id="localVideo" autoplay muted></video>
-    <video id="remoteVideo" autoplay></video>
-    <canvas id="canvas"></canvas>
-    <button onclick="capture()">拍照</button>
-    <button onclick="changeFilter()">滤镜</button>
-    <a onclick="toImg()" id="downloadBtn">下载图片</a>
+    <video  autopaly controls id="localVideo" style="width: 480px; height:360px" ></video>
+    <video  autopaly controls id="remoteVideo" style="width: 480px; height:360px" ></video>
+    <video playsinline id="recordPlayer" style="width: 480px; height:360px" ></video>
+    <canvas id="canvas" width="480px" height="360px" ></canvas>
+    <div>
+        <button onclick="capture()">拍照</button>     
+        <button onclick="changeFilter()">滤镜</button>
+        <button id="recordBtn">开始录制</button>
+        <button id="playBtn" disabled="true">播放</button>
+        <button id="downloadBtn" disabled="true">下载视频</button>
+    </div>
+    
     <script src="main.js"></script>
 </body>
 </html>

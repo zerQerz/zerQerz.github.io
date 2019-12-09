@@ -54,8 +54,14 @@ function sendMessage(message) {
 }
 
 var bol = false;
-var canvas = document.getElementById('canvas');
+var remoteVideo = document.getElementById('remoteVideo');
+var recordPlayer = document.getElementById('recordPlayer');
+var recordBtn = document.getElementById('recordBtn');
+var playBtn = document.getElementById('playBtn');
 var downloadBtn = document.getElementById('downloadBtn');
+var buffer;
+var mediaStream;
+var mediaRecoder;
 //var chunks = [];
 //var mediaStream = null;
 function startWebRTC(isOfferer) {
@@ -131,28 +137,77 @@ function localDescCreated(desc) {
     );
 }
 
-function capture() {
-    if (true) {
-        canvas.width = remoteVideo.clientWidth;
-        canvas.height = remoteVideo.clientHeight;
-        var context = canvas.getContext('2d');
-        context.drawImage(remoteVideo, 0, 0);
-    } else {
-        alert('请先打开摄像头');
-    }
+function capture(){
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    //绘制画面
+    context.drawImage(remoteVideo,0,0,480,360);
 }
-var filters = ['', 'grayscale', 'sepia', 'invert','hue-rotate'],
-        currentFilter = 0;
-function changeFilter() {
+var filters = ['', 'grayscale', 'sepia', 'invert'];
+var currentFilter = 0;
+function changeFilter(){
     currentFilter++;
-    if (currentFilter > filters.length - 1) currentFilter = 0;
+    if(currentFilter>filters.length-1) currentFilter=0;
     canvas.className = filters[currentFilter];
 }
 
-function toImg() {
-   var src = canvas.toDataURL("image/png");
-    downloadBtn.href = src;
-    downloadBtn.download = new Date().toLocaleTimeString()
+//录制按钮点击事件
+recordBtn.onclick = function(){
+    if(promise){
+        if (recordBtn.textContent==='开始录制') {
+            startRecord();
+            recordBtn.textContent='停止录制';
+            playBtn.removeAttribute('disabled');
+            downloadBtn.removeAttribute('disabled');
+        }else if (recordBtn.textContent==='停止录制') {
+            stopRecord();
+            recordBtn.textContent='开始录制';
+            //playBtn.setAttribute('disabled',true);
+            //downloadBtn.setAttribute('disabled',true);
+        }
+    }else{alert("请打开摄像头！！！")}
+}
+//开始录制
+function startRecord(){
+    var options = {mimeType:'video/webm;codecs=vp8'};
+    try{
+        buffer = [];
+        mediaRecoder = new MediaRecorder(mediaStream,options);
+    }catch(e){
+        console.log('创建MediaRecorder失败');
+        return;
+    }
+    mediaRecoder.ondataavailable = function(e){
+        if (e && e.data && e.data.size>0) {
+            buffer.push(e.data);
+        }
+    }
+    //开始录制，录制时间片为10ms
+    mediaRecoder.start(10);
+}
+//停止录制
+function stopRecord(){
+    mediaRecoder.stop();
+}
+//播放按钮点击事件
+playBtn.onclick = function(){
+    var blob = new Blob(buffer,{type:'video/mp4'});
+    //根据缓存数据生成url给recordPlayer进行播放
+    recordPlayer.src = window.URL.createObjectURL(blob);
+    recordPlayer.srcObject = null;
+    recordPlayer.controls = true; //显示播放控件
+}
+//下载按钮点击事件
+downloadBtn.onclick = function(){
+    var blob = new Blob(buffer, {type:'video/mp4'});
+    //根据缓存数据生成url
+    var url = window.URL.createObjectURL(blob);
+    //创建一个a标签，通过a标签指向url来下载
+    var a = document.createElement('a');
+    a.href = url;
+    a.style.display = 'none'; //不显示a标签
+    a.download = new Date().toLocaleTimeString();
+    a.click(); //调用a标签的点击事件进行下载
 }
 // function startRecord() {
 //         console.log('开始');
