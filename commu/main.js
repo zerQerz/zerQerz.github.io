@@ -135,7 +135,7 @@ function capture() {
         canvas.width = remoteVideo.clientWidth;
         canvas.height = remoteVideo.clientHeight;
         var context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0);
+        context.drawImage(remoteVideo, 0, 0);
     } else {
         alert('请先打开摄像头');
     }
