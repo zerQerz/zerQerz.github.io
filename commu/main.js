@@ -132,8 +132,9 @@ function localDescCreated(desc) {
         onError
     );
 }
+
 function capture() {
-    if (bol) {
+    if (true) {
         canvas.width = video.clientWidth;
         canvas.height = video.clientHeight;
         var context = canvas.getContext('2d');
