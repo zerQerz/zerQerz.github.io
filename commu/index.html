@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Copy this URL and Open it in another page!</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -58,11 +59,15 @@
     <div class="copy">Copy this URL,and Open it in another page</div>
     <video id="localVideo" autoplay muted></video>
     <video id="remoteVideo" autoplay></video>
-    <video muted autoplay controls id="video"></video>
-    <video muted autoplay controls id="recorderVideo"></video>
-    <button onclick="startRecord()">开始录制</button>
-    <button id="stopRecord">结束</button>
-    <a  id="downloadBtn">下载视频</a>
+
+    <div>
+        <video autoplay controls id="video"></video>
+        <canvas id="canvas"></canvas>
+    </div>
+    <button onclick="capture()">拍照</button>
+    <button onclick="changeFilter()">滤镜</button>
+    <a onclick="toImg()" id="downloadBtn">下载图片</a>
+
     <script src="main.js"></script>
 </body>
 </html>
