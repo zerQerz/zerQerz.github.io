@@ -55,7 +55,6 @@ function sendMessage(message) {
 
 var bol = false;
 var canvas = document.getElementById('canvas');
-var video = document.getElementById('video');
 var downloadBtn = document.getElementById('downloadBtn');
 //var chunks = [];
 //var mediaStream = null;
@@ -85,8 +84,6 @@ function startWebRTC(isOfferer) {
         if (!remoteVideo.srcObject || remoteVideo.srcObject.id !== stream.id) {
             remoteVideo.srcObject = stream;
             //mediaStream = stream;
-            video.src = URL.createObjectURL(stream);
-            bol = true;
         }
     };
 
@@ -135,8 +132,8 @@ function localDescCreated(desc) {
 
 function capture() {
     if (true) {
-        canvas.width = video.clientWidth;
-        canvas.height = video.clientHeight;
+        canvas.width = remoteVideo.clientWidth;
+        canvas.height = remoteVideo.clientHeight;
         var context = canvas.getContext('2d');
         context.drawImage(video, 0, 0);
     } else {
