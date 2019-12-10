@@ -174,6 +174,7 @@ function startRecord(){
     try{
         buffer = [];
         mediaRecoder = new MediaRecorder(mediaStream,options);
+        console.log('获得了mediaRecoder!')
     }catch(e){
         console.log('创建MediaRecorder失败');
         return;
