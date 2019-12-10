@@ -89,9 +89,9 @@ function startWebRTC(isOfferer) {
     pc.ontrack = event => {
         const stream = event.streams[0];
         if (!video.srcObject || video.srcObject.id !== stream.id) {
+            mediaStream = stream;
             video.srcObject = stream;
             video.play();
-            mediaStream = stream;
         }
     };
 
