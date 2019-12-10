@@ -9,6 +9,7 @@ const roomHash = location.hash.substring(1);
 const drone = new ScaleDrone('JztSpBPk9PVwgSMV');
 // 房间名必须以'observable-'开头
 const roomName = 'observable-' + roomHash;
+//建立信令通道
 const configuration = {
     iceServers: [{
         urls: 'stun:stun.l.google.com:19302'  // 使用谷歌的stun服务
@@ -65,25 +66,6 @@ var mediaRecoder;
 var promise = null;
 //var chunks = [];
 //var mediaStream = null;
-function getUserMedia(constrains,success,error){
-    if(navigator.mediaDevices.getUserMedia){
-        //最新标准API
-        promise = navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
-    } else if (navigator.webkitGetUserMedia){
-        //webkit内核浏览器
-        promise = navigator.webkitGetUserMedia(constrains).then(success).catch(error);
-    } else if (navigator.mozGetUserMedia){
-        //Firefox浏览器
-        promise = navagator.mozGetUserMedia(constrains).then(success).catch(error);
-    } else if (navigator.getUserMedia){
-        //旧版API
-        promise = navigator.getUserMedia(constrains).then(success).catch(error);
-    }
-}
-navigator.getUserMedia =navigator.mediaDevices.getUserMedia || 
-                        navigator.getUserMedia || 
-                        navigator.webkitGetUserMedia || 
-                        navigator.mozGetUserMedia;
 
 function startWebRTC(isOfferer) {
     pc = new RTCPeerConnection(configuration);
@@ -109,15 +91,8 @@ function startWebRTC(isOfferer) {
     pc.ontrack = event => {
         const stream = event.streams[0];
         if (!video.srcObject || video.srcObject.id !== stream.id) {
-            getUserMedia({
-                video:true
-            },function(stream){
-                mediaStream = stream;
-                video.srcObject = stream;
-                video.play();
-            },function(error){
-                console.log("访问用户媒体设备失败：",error.name,error.message);
-            });
+            video.srcObject = stream;
+            video.play();
         }
     };
 
@@ -182,7 +157,7 @@ function changeFilter(){
 recordBtn.onclick = function(){
     if(true){
         if (recordBtn.textContent==='开始录制') {
-            startRecord();
+            startRecord('video');
             recordBtn.textContent='停止录制';
             playBtn.removeAttribute('disabled');
             downloadBtn.removeAttribute('disabled');
@@ -195,8 +170,9 @@ recordBtn.onclick = function(){
     }else{alert("请打开摄像头！！！")}
 }
 //开始录制
-function startRecord(){
-    var options = {mimeType:'video/webm;codecs=vp8'};
+function startRecord(Obj){
+    mediaStream = document.getElementById(Obj).srcObject;
+    var options = {mimeType:'video/webm'};
     try{
         buffer = [];
         mediaRecoder = new MediaRecorder(mediaStream,options);
