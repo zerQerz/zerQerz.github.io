@@ -13,10 +13,6 @@
             font-family: sans-serif;
             color: white;
         }
-        video {
-            background: black;
-            border: 1px solid gray;
-        }
         .page {
             position: relative;
             display: block;
@@ -24,17 +20,7 @@
             width: 500px;
             height: 500px;
         }
-        #yours {
-            width: 150px;
-            height: 150px;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
-        #theirs {
-            width: 500px;
-            height: 500px;
-        }
+        
     </style>
     <style>
         .grayscale {
@@ -57,7 +43,7 @@
 </head>
 <body>
     <div class="copy">Copy this URL,and Open it in another page</div>
-    <video  autopaly controls id="localVideo" style="width: 480px; height:360px" ></video>
+    <video  autopaly controls id="localVideo" muted style="width: 480px; height:360px" ></video>
     <video  autopaly controls id="video" style="width: 480px; height:360px" ></video>
     <video playsinline id="recordPlayer" style="width: 480px; height:360px" ></video>
     <canvas id="canvas" width="480px" height="360px" ></canvas>

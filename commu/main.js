@@ -60,11 +60,31 @@ var recordBtn = document.getElementById('recordBtn');
 var playBtn = document.getElementById('playBtn');
 var downloadBtn = document.getElementById('downloadBtn');
 var buffer;
-var mediaStream;
+var mediaStream = null;
 var mediaRecoder;
 var promise = null;
 //var chunks = [];
 //var mediaStream = null;
+function getUserMedia(constrains,success,error){
+    if(navigator.mediaDevices.getUserMedia){
+        //最新标准API
+        promise = navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
+    } else if (navigator.webkitGetUserMedia){
+        //webkit内核浏览器
+        promise = navigator.webkitGetUserMedia(constrains).then(success).catch(error);
+    } else if (navigator.mozGetUserMedia){
+        //Firefox浏览器
+        promise = navagator.mozGetUserMedia(constrains).then(success).catch(error);
+    } else if (navigator.getUserMedia){
+        //旧版API
+        promise = navigator.getUserMedia(constrains).then(success).catch(error);
+    }
+}
+navigator.getUserMedia =navigator.mediaDevices.getUserMedia || 
+                        navigator.getUserMedia || 
+                        navigator.webkitGetUserMedia || 
+                        navigator.mozGetUserMedia;
+
 function startWebRTC(isOfferer) {
     pc = new RTCPeerConnection(configuration);
 
@@ -89,9 +109,15 @@ function startWebRTC(isOfferer) {
     pc.ontrack = event => {
         const stream = event.streams[0];
         if (!video.srcObject || video.srcObject.id !== stream.id) {
-            mediaStream = stream;
-            video.srcObject = stream;
-            video.play();
+            getUserMedia({
+                video:true
+            },function(stream){
+                mediaStream = stream;
+                video.srcObject = stream;
+                video.play();
+            },function(error){
+                console.log("访问用户媒体设备失败：",error.name,error.message);
+            });
         }
     };
 
