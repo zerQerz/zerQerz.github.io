@@ -91,7 +91,7 @@ function startWebRTC(isOfferer) {
         if (!video.srcObject || video.srcObject.id !== stream.id) {
             video.srcObject = stream;
             video.play();
-            //mediaStream = stream;
+            mediaStream = stream;
         }
     };
 
