@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Copy this URL and Open it in another page!</title>
+    <title>QAQ</title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <style>
         body {
-            background-color: #3D6DF2;
+            background-color: #00CACA;//#3D6DF2
             margin-top: 15px;
             font-family: sans-serif;
             color: white;
+        }
+        video {
+            background: black;
+            border: 1px solid gray;
         }
         .page {
             position: relative;
@@ -20,6 +24,16 @@
             width: 500px;
             height: 500px;
         }
+        #localVideo {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: 200px;
+            right: 5px;
+        }
+        #video {
+            width: 500px;
+            height: 800px;}
         
     </style>
     <style>
@@ -42,19 +56,19 @@
     </style>
 </head>
 <body>
-    <div class="copy">Copy this URL,and Open it in another page</div>
-    <video  autopaly controls id="localVideo" muted style="width: 480px; height:360px" ></video>
-    <video  autopaly controls id="video" style="width: 480px; height:360px" ></video>
-    <video playsinline id="recordPlayer" style="width: 480px; height:360px" ></video>
-    <canvas id="canvas" width="480px" height="360px" ></canvas>
-    <div>
+    <div id="call-page" class="page">
+        <h1>Welcome to the QuickTalk TalkRoom!</h1>
+        <br><p>Copy this URL,and Send to your Partner.</p>
+        <video autopaly controls id="localVideo" muted></video>
+        <video autopaly controls id="video"></video>
+        <video playsinline id="recordPlayer" style="width: 200px; height:200px" ></video>
         <button onclick="capture()">拍照</button>     
         <button onclick="changeFilter()">滤镜</button>
-        <button id="recordBtn">开始录制</button>
+        <br><button id="recordBtn">开始录制</button>
         <button id="playBtn" disabled="true">播放</button>
         <button id="downloadBtn" disabled="true">下载视频</button>
+        <canvas id="canvas" width="500px" height="500px" ></canvas>
     </div>
-    
     <script src="main.js"></script>
 </body>
 </html>
