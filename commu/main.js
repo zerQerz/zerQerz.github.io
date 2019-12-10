@@ -54,7 +54,7 @@ function sendMessage(message) {
 }
 
 var bol = false;
-var remoteVideo = document.getElementById('remoteVideo');
+var video = document.getElementById('video');
 var recordPlayer = document.getElementById('recordPlayer');
 var recordBtn = document.getElementById('recordBtn');
 var playBtn = document.getElementById('playBtn');
@@ -88,9 +88,9 @@ function startWebRTC(isOfferer) {
     // 当远程数据流到达时，将数据流装载到video中
     pc.ontrack = event => {
         const stream = event.streams[0];
-        if (!remoteVideo.srcObject || remoteVideo.srcObject.id !== stream.id) {
-            remoteVideo.srcObject = stream;
-            remoteVideo.play();
+        if (!video.srcObject || video.srcObject.id !== stream.id) {
+            video.srcObject = stream;
+            video.play();
             //mediaStream = stream;
         }
     };
@@ -142,7 +142,7 @@ function capture(){
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
     //绘制画面
-    context.drawImage(remoteVideo,0,0,480,360);
+    context.drawImage(video,0,0,480,360);
 }
 var filters = ['', 'grayscale', 'sepia', 'invert'];
 var currentFilter = 0;
