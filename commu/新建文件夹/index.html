@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Copy this URL and Open it in another page!</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+        body {
+            background-color: #3D6DF2;
+            margin-top: 15px;
+            font-family: sans-serif;
+            color: white;
+        }
+        video {
+            background: black;
+            border: 1px solid gray;
+        }
+        .page {
+            position: relative;
+            display: block;
+            margin: 0 auto;
+            width: 500px;
+            height: 500px;
+        }
+        #yours {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        #theirs {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+    <style>
+        .grayscale {
+            -webkit-filter: grayscale(1);
+            filter: grayscale(1);
+        }
+        .sepia {
+            -webkit-filter: sepia(1);
+            filter: sepia(1);
+        }
+        .invert {
+            -webkit-filter: invert(100);
+            filter: invert(100);
+        }
+        .hue-rotate {
+            -webkit-filter: hue-rotate(90deg);
+            filter: hue-rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="copy">Copy this URL,and Open it in another page</div>
+    <video  autopaly controls id="localVideo" style="width: 480px; height:360px" ></video>
+    <video  autopaly controls id="video" style="width: 480px; height:360px" ></video>
+    <video playsinline id="recordPlayer" style="width: 480px; height:360px" ></video>
+    <canvas id="canvas" width="480px" height="360px" ></canvas>
+    <div>
+        <button onclick="capture()">拍照</button>     
+        <button onclick="changeFilter()">滤镜</button>
+        <button id="recordBtn">开始录制</button>
+        <button id="playBtn" disabled="true">播放</button>
+        <button id="downloadBtn" disabled="true">下载视频</button>
+    </div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
