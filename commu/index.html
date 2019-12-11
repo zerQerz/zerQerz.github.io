@@ -21,18 +21,18 @@
             position: relative;
             display: block;
             margin: 0 auto;
-            width: 400px;
-            height: 500px;
+            width: 500px;
+            height: 800px;
         }
         #localVideo {
             width: 150px;
             height: 150px;
             position: absolute;
-            top: 140px;
+            top: 150px;
             right: 0px;
         }
         #video {
-            width: 400px;
+            width: 500px;
             height: 700px;
         }
         #recordPlayer {
@@ -61,17 +61,17 @@
 </head>
 <body>
     <div id="call-page" class="page">
-        <h2 style="background-color: blue">Hi,Welcome to the QuickTalk!</h2>
-        <h3 style="color:pink">❤─────────────────────────QAQ</h3>
-        <p style="color:blue">Copy this URL,and Send to your Partner.</p>
+        <h2 style="background-color: blue" align="center">Hi,Welcome to the QuickTalk!</h2>
+        <h3 style="color:pink">❤───────────────────────QAQ</h3>
+        <p style="color:blue">Copy this URL,and Send it to your Partner.</p>
         <video autopaly controls id="localVideo" muted></video>
         <video autopaly controls id="video"></video>
-        <video playsinline id="recordPlayer" style="width: 200px; height:200px" ></video>
         <button onclick="capture()">拍照</button>     
         <button onclick="changeFilter()">滤镜</button>
-        <br><button id="recordBtn">开始录制</button>
+        <button id="recordBtn">开始录制</button>
         <button id="playBtn" disabled="true">播放</button>
         <button id="downloadBtn" disabled="true">下载视频</button>
+        <video playsinline id="recordPlayer" style="width: 200px; height:200px" ></video>
         <canvas id="canvas" width="500px" height="500px" ></canvas>
     </div>
     <script src="main.js"></script>
